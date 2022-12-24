@@ -1,5 +1,6 @@
 package com.javatechie.config;
 
+import com.javatechie.service.EmployeeUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -20,19 +21,20 @@ public class EMSUpgradeSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails employee = User.withUsername("Basant")
-                .password(passwordEncoder.encode("Pwd1"))
-                .roles("EMPLOYEE").build();
-
-        UserDetails hr = User.withUsername("Amit")
-                .password(passwordEncoder.encode("Pwd2"))
-                .roles("HR").build();
-
-        UserDetails admin = User.withUsername("Parmesh")
-                .password(passwordEncoder.encode("Pwd3"))
-                .roles("MANAGER", "HR").build();
-
-        return new InMemoryUserDetailsManager(employee, admin, hr);
+//        UserDetails employee = User.withUsername("Basant")
+//                .password(passwordEncoder.encode("Pwd1"))
+//                .roles("EMPLOYEE").build();
+//
+//        UserDetails hr = User.withUsername("Amit")
+//                .password(passwordEncoder.encode("Pwd2"))
+//                .roles("HR").build();
+//
+//        UserDetails admin = User.withUsername("Parmesh")
+//                .password(passwordEncoder.encode("Pwd3"))
+//                .roles("MANAGER", "HR").build();
+//
+//        return new InMemoryUserDetailsManager(employee, admin, hr);
+        return new EmployeeUserDetailsService();
     }
 
     @Bean
@@ -44,7 +46,7 @@ public class EMSUpgradeSecurityConfig {
 //                .authenticated().and().httpBasic().and().build();
         return http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/employees/welcome").permitAll()
+                .antMatchers("/employees/welcome","/employees/create").permitAll()
                 .and()
                 .authorizeRequests().antMatchers("/employees/**")
                 .authenticated().and().httpBasic().and().build();

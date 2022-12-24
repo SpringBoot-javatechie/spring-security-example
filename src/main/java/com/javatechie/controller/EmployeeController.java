@@ -23,7 +23,7 @@ public class EmployeeController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize(AUTHORITY_ROLE_HR)
+//    @PreAuthorize(AUTHORITY_ROLE_HR)
     public Employee onboardNewEmployee(@RequestBody Employee employee) {
         return service.createNewEmployee(employee);
     }
@@ -38,5 +38,11 @@ public class EmployeeController {
     @PreAuthorize("hasAuthority('ROLE_EMPLOYEE')")
     public Employee getEmployeeById(@PathVariable Integer id) {
         return service.getEmployee(id);
+    }
+
+    @PutMapping("/update")
+    @PreAuthorize(AUTHORITY_ROLE_HR)
+    public Employee updateRoles(@RequestBody Employee employee){
+        return service.changeRoleOfEmployee(employee);
     }
 }
