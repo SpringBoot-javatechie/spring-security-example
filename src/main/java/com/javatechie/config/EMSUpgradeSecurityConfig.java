@@ -49,7 +49,7 @@ public class EMSUpgradeSecurityConfig {
                 .antMatchers("/employees/welcome","/employees/create").permitAll()
                 .and()
                 .authorizeRequests().antMatchers("/employees/**")
-                .authenticated().and().httpBasic().and().build();
+                .authenticated().and().formLogin().and().build();
     }
 
     @Bean
